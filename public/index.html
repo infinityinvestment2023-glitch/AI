@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InterLink AI Chatbot</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { theme: { extend: {} } };
+    </script>
+  </head>
+  <body class="bg-black flex items-center justify-center min-h-screen">
+
+    <!-- Login Section -->
+    <div id="login-section" class="main-container">
+      <div class="header">
+        <div class="header-content">
+          <div class="logo-container">
+            <img src="https://public.interlinklabs.ai/1761665406060_Logo.png" alt="Logo" />
+          </div>
+          <h1 class="font-semibold text-[18px]">InterLink Coach Joel AI</h1>
+        </div>
+      </div>
+     <div class="chat-area">
+          <div>
+            <div class="flex flex-col items-center gap-2">
+              <p class="text-[#525866] text-[16px]">👋 Hi there!</p>
+              <h1 class="text-[#0E121B] font-semibold text-[18px]">
+                How can we help you today?
+              </h1>
+            </div>
+            <img
+              src="https://public.interlinklabs.ai/1761666821438_axolink.png"
+              alt=""
+              class="object-cover" />
+          </div>
+        </div>
+      <div class="px-[24px] pt-[16px] border-t border-[#E3E6EC]">
+        <button id="btn-get-started"
+          class="w-full py-[10px] px-[16px] bg-[#6962F1] rounded-[12px] text-white">
+          Get Started
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Section -->
+    <div id="chat-section" class="main-container hidden flex flex-col">
+      <div class="header">
+        <div class="header-content">
+          <div class="logo-container">
+            <img src="https://public.interlinklabs.ai/1761665406060_Logo.png" alt="Logo" />
+          </div>
+          <h1 class="font-semibold text-[18px]">Chat with Coach Joel AI</h1>
+        </div>
+      </div>
+
+      <div id="chat-output" class="chat-area overflow-y-auto flex-1 flex flex-col gap-3 p-4">
+        <!-- Initial bot message -->
+       
+          <div>
+            <img
+              src="https://public.interlinklabs.ai/1761666821438_axolink.png"
+              alt=""
+              class="object-cover" />
+          </div>
+       <div class="flex items-center gap-2 w-full">
+          <img src="https://public.interlinklabs.ai/1761722972563_avt.png" alt=""
+               class="w-10 h-10 rounded-full" />
+          <div class="px-4 py-[10px] max-w-[70%] bg-[#F5F7FA] text-[#0E121B] rounded-[16px] rounded-bl-[8px]">
+            <p class="text-[14px]">👋Hi! Linker what can I help you with?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Area with Mic -->
+      <div class="px-[24px] pt-[16px] border-t border-[#E3E6EC] flex items-center gap-3">
+        <div class="flex-1 min-w-0 bg-[#F5F7FA] rounded-full text-[14px] py-[12px] px-4 flex items-center gap-3">
+          <input id="user-message" type="text" placeholder="Ask Anything"
+                 class="placeholder:text-[#99A0AE] outline-none w-full bg-transparent" />
+          <img src="https://public.interlinklabs.ai/1761751584296_SmileCircle.png" alt=""
+               class="w-[24px] h-[24px]" />
+          <img id="btn-mic" src="https://public.interlinklabs.ai/1761751584745_microphone.png" alt="Mic"
+               class="w-[24px] h-[24px] cursor-pointer" />
+        </div>
+        <button id="btn-send-message" class="shrink-0 w-[32px] h-[32px]">
+          <img src="https://public.interlinklabs.ai/1761722579694_send.png" alt="Send" />
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const loginSection = document.getElementById("login-section");
+      const chatSection = document.getElementById("chat-section");
+      const getStartedBtn = document.getElementById("btn-get-started");
+      const sendBtn = document.getElementById("btn-send-message");
+      const userInput = document.getElementById("user-message");
+      const chatOutput = document.getElementById("chat-output");
+      const micBtn = document.getElementById("btn-mic");
+
+      // Show chat section
+      getStartedBtn.addEventListener("click", () => {
+        loginSection.classList.add("hidden");
+        chatSection.classList.remove("hidden");
+        userInput.focus();
+      });
+
+      // Add message
+      function addMessage(text, isUser = true) {
+        const divWrapper = document.createElement("div");
+        divWrapper.className = `flex items-center gap-2 w-full ${isUser ? 'flex-row-reverse' : ''}`;
+        const img = document.createElement("img");
+        img.src = isUser
+          ? "https://public.interlinklabs.ai/1761665406060_Logo.png"
+          : "https://public.interlinklabs.ai/1761722972563_avt.png";
+        img.className = "w-10 h-10 rounded-full";
+        const bubble = document.createElement("div");
+        bubble.className = `px-4 py-[10px] max-w-[70%] rounded-[16px] ${isUser ? 'bg-[#1A1A1A] text-white rounded-br-[8px]' : 'bg-[#F5F7FA] text-[#0E121B] rounded-bl-[8px]'}`;
+        bubble.textContent = text;
+        divWrapper.appendChild(img);
+        divWrapper.appendChild(bubble);
+        chatOutput.appendChild(divWrapper);
+        chatOutput.scrollTop = chatOutput.scrollHeight;
+      }
+
+      // Send message
+      async function sendMessage() {
+        const message = userInput.value.trim();
+        if (!message) return;
+        addMessage(message, true);
+        userInput.value = "";
+
+        try {
+          const res = await fetch("/api/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: message })
+          });
+          const data = await res.json();
+          addMessage(data.text || "Error: No response", false);
+        } catch (err) {
+          addMessage("Error connecting to server.", false);
+        }
+      }
+
+      sendBtn.addEventListener("click", sendMessage);
+      userInput.addEventListener("keydown", e => { if(e.key==="Enter") sendMessage(); });
+
+      // === Voice Recording ===
+      let mediaRecorder = null, chunks = [], isRecording = false;
+
+      micBtn.addEventListener("click", async () => {
+        if (isRecording) {
+          mediaRecorder.stop();
+          return;
+        }
+
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          chunks = [];
+
+          mediaRecorder.ondataavailable = e => chunks.push(e.data);
+
+          mediaRecorder.onstop = async () => {
+            const blob = new Blob(chunks, { type: "audio/webm" });
+            addMessage("🎤 Voice message sent!", true);
+
+            // send to backend if needed
+            // const formData = new FormData();
+            // formData.append("audio", blob, "voice.webm");
+            // await fetch("/api/voice", { method: "POST", body: formData });
+
+            stream.getTracks().forEach(track => track.stop());
+            isRecording = false;
+            micBtn.src = "https://public.interlinklabs.ai/1761751584745_microphone.png";
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          micBtn.src = "https://public.interlinklabs.ai/1761751773453_pause-circle.png";
+        } catch (err) {
+          console.error("Mic blocked/unavailable", err);
+        }
+      });
+    </script>
+  </body>
+</html>
+

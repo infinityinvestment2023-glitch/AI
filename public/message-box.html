@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat bot</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {},
+        },
+      };
+    </script>
+  </head>
+  <style>
+    .waveform {
+      display: flex;
+      align-items: flex-end;
+      height: 24px;
+      gap: 4px;
+    }
+    .waveform .bar {
+      width: 3px;
+      height: 8px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.95);
+      animation: wave 1s ease-in-out infinite;
+      animation-play-state: running;
+    }
+    .recording-paused .bar {
+      animation-play-state: paused;
+      opacity: 0.6;
+    }
+    @keyframes wave {
+      0%,
+      100% {
+        transform: scaleY(0.35);
+      }
+      50% {
+        transform: scaleY(1);
+      }
+    }
+    .waveform .bar:nth-child(5n + 1) {
+      animation-delay: 0.05s;
+    }
+    .waveform .bar:nth-child(5n + 2) {
+      animation-delay: 0.1s;
+    }
+    .waveform .bar:nth-child(5n + 3) {
+      animation-delay: 0.15s;
+    }
+    .waveform .bar:nth-child(5n + 4) {
+      animation-delay: 0.2s;
+    }
+    .waveform .bar:nth-child(5n + 5) {
+      animation-delay: 0.25s;
+    }
+  </style>
+
+  <body>
+    <main class="main-area">
+      <div class="main-container">
+        <div class="header">
+          <div class="header-content">
+            <div class="logo-container">
+              <img
+                src="https://public.interlinklabs.ai/1761665406060_Logo.png"
+                alt="" />
+            </div>
+            <h1 class="font-semibold text-[18px]">Hello, zane152</h1>
+          </div>
+          <button class="header-button">
+            <img
+              src="https://public.interlinklabs.ai/1761665924687_Vector.png"
+              alt=""
+              srcset=""
+              class="header-icon-btn" />
+          </button>
+        </div>
+        <div class="chat-area overflow-y-auto max-h-[50vh] flex flex-col gap-4">
+          <div>
+            <div class="flex flex-col items-center gap-2">
+              <p class="text-[#525866] text-[16px]">👋 Hi there!</p>
+              <h1 class="text-[#0E121B] font-semibold text-[18px]">
+                How can we help you today?
+              </h1>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="41"
+              height="1"
+              viewBox="0 0 41 1"
+              fill="none">
+              <path d="M0.5 0.5H40.5" stroke="#E1E4EA" stroke-linecap="round" />
+            </svg>
+            <p class="text-[#CACFD8] text-[12px]">May 20</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="41"
+              height="1"
+              viewBox="0 0 41 1"
+              fill="none">
+              <path d="M0.5 0.5H40.5" stroke="#E1E4EA" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="w-full max-w-2xl mx-auto flex flex-col gap-3">
+            <div class="flex items-center gap-2 w-full">
+              <img
+                src="https://public.interlinklabs.ai/1761722972563_avt.png"
+                alt=""
+                class="w-10 h-10 rounded-full" />
+              <div
+                class="px-4 py-[10px] max-w-[70%] bg-[#F5F7FA] text-[#0E121B] rounded-[16px] rounded-bl-[8px]">
+                <p class="text-[14px]">
+                  👋Hi! Linker what can I help you with?
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 w-full even:flex-row-reverse">
+              <img
+                src="https://public.interlinklabs.ai/1761721359159_Ellipse.png"
+                alt=""
+                class="w-10 h-10 rounded-full" />
+              <div
+                class="px-4 py-[10px] max-w-[70%] even:bg-[#1A1A1A] even:text-white odd:bg-[#F5F7FA] odd:text-[#0E121B] rounded-[16px] even:rounded-br-[8px] odd:rounded-bl-[8px]">
+                <p class="text-[14px]">
+                  👋Hi! Linker what can I help you with?
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 w-full">
+              <img
+                src="https://public.interlinklabs.ai/1761722972563_avt.png"
+                alt=""
+                class="w-10 h-10 rounded-full" />
+              <div
+                class="px-4 py-[10px] max-w-[70%] bg-[#F5F7FA] text-[#0E121B] rounded-[16px] rounded-bl-[8px]">
+                <p class="text-[14px]">…</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 w-full even:flex-row-reverse">
+              <img
+                src="https://public.interlinklabs.ai/1761721359159_Ellipse.png"
+                alt=""
+                class="w-10 h-10 rounded-full" />
+              <div
+                class="px-4 py-[10px] max-w-[70%] even:bg-[#1A1A1A] even:text-white odd:bg-[#F5F7FA] odd:text-[#0E121B] rounded-[16px] even:rounded-br-[8px] odd:rounded-bl-[8px]">
+                <p class="text-[14px]">…</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-full max-w-2xl mx-auto flex flex-col gap-3">
+            <div class="flex items-center gap-2 w-full">
+              <img
+                src="https://public.interlinklabs.ai/1761722972563_avt.png"
+                alt=""
+                class="w-10 h-10 rounded-full" />
+              <div
+                class="px-4 py-[10px] max-w-[70%] bg-[#F5F7FA] text-[#0E121B] rounded-[16px] rounded-bl-[8px]">
+                <p class="text-[14px]">
+                  👋Hi! Linker what can I help you with?
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 w-full even:flex-row-reverse">
+              <img
+                src="https://public.interlinklabs.ai/1761721359159_Ellipse.png"
+                alt=""
+                class="w-10 h-10 rounded-full" />
+              <div
+                class="px-4 py-[10px] max-w-[70%] even:bg-[#1A1A1A] even:text-white odd:bg-[#F5F7FA] odd:text-[#0E121B] rounded-[16px] even:rounded-br-[8px] odd:rounded-bl-[8px]">
+                <p class="text-[14px]">
+                  👋Hi! Linker what can I help you with?
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 w-full">
+              <img
+                src="https://public.interlinklabs.ai/1761722972563_avt.png"
+                alt=""
+                class="w-10 h-10 rounded-full" />
+              <div
+                class="px-4 py-[10px] max-w-[70%] bg-[#F5F7FA] text-[#0E121B] rounded-[16px] rounded-bl-[8px]">
+                <p class="text-[14px]">…</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 w-full even:flex-row-reverse">
+              <img
+                src="https://public.interlinklabs.ai/1761721359159_Ellipse.png"
+                alt=""
+                class="w-10 h-10 rounded-full" />
+              <div
+                class="px-4 py-[10px] max-w-[70%] even:bg-[#1A1A1A] even:text-white odd:bg-[#F5F7FA] odd:text-[#0E121B] rounded-[16px] even:rounded-br-[8px] odd:rounded-bl-[8px]">
+                <p class="text-[14px]">…</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="px-[24px] pt-[16px] border-t border-[#E3E6EC] flex items-center gap-3">
+          <div
+            class="flex-1 min-w-0 bg-[#F5F7FA] rounded-full text-[14px] py-[12px] px-4 flex items-center gap-3">
+            <input
+              type="text"
+              placeholder="Ask Anything"
+              class="placeholder:text-[#99A0AE] outline-none w-full bg-transparent" />
+            <img
+              src="https://public.interlinklabs.ai/1761751584296_SmileCircle.png"
+              alt=""
+              class="w-[24px] h-[24px]" />
+            <img
+              id="btn-mic"
+              src="https://public.interlinklabs.ai/1761751584745_microphone.png"
+              alt=""
+              class="w-[24px] h-[24px] cursor-pointer" />
+          </div>
+
+          <div
+            id="recording-mode"
+            class="hidden flex flex-1 min-w-0 items-center gap-3">
+            <button
+              id="btn-bin"
+              class="shrink-0"
+              aria-label="Discard recording">
+              <img
+                src="https://public.interlinklabs.ai/1761751773871_Bin.png"
+                alt="delete"
+                class="w-[24px] h-[24px]" />
+            </button>
+
+            <div
+              class="flex-1 bg-[#6962F1] text-white rounded-full px-4 py-3 flex items-center gap-3">
+              <button
+                id="btn-pause"
+                class="w-8 h-8 shrink-0 grid place-items-center"
+                aria-label="Pause / Resume">
+                <img
+                  src="https://public.interlinklabs.ai/1761751773453_pause-circle.png"
+                  alt="pause"
+                  class="w-6 h-6" />
+              </button>
+
+              <div id="wave" class="waveform flex-1 flex items-center gap-1">
+                <span class="bar"></span><span class="bar"></span
+                ><span class="bar"></span><span class="bar"></span
+                ><span class="bar"></span> <span class="bar"></span
+                ><span class="bar"></span><span class="bar"></span
+                ><span class="bar"></span><span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span
+                ><span class="bar"></span><span class="bar"></span
+                ><span class="bar"></span> <span class="bar"></span
+                ><span class="bar"></span><span class="bar"></span
+                ><span class="bar"></span><span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span
+                ><span class="bar"></span><span class="bar"></span>
+              </div>
+
+              <span id="rec-timer" class="text-sm font-medium tabular-nums"
+                >0:00</span
+              >
+            </div>
+          </div>
+
+          <button id="btn-send-recording" class="shrink-0">
+            <img
+              src="https://public.interlinklabs.ai/1761722579694_send.png"
+              alt=""
+              class="w-[32px] h-[32px]" />
+          </button>
+        </div>
+      </div>
+    </main>
+    <script>
+      const $ = (s, r = document) => r.querySelector(s);
+      const textMode = document.querySelector("#btn-mic")?.closest("div");
+      const recMode = $("#recording-mode");
+      const micBtn = $("#btn-mic");
+      const pauseBtn = $("#btn-pause");
+      const binBtn = $("#btn-bin");
+      const sendBtn = $("#btn-send-recording");
+      const timerEl = $("#rec-timer");
+      const chatArea = document.querySelector(".chat-area");
+
+      let mediaRecorder = null,
+        chunks = [];
+      let timer = null,
+        seconds = 0,
+        isPaused = false;
+
+      const fmt2 = (n) => String(n).padStart(2, "0");
+
+      function showRecordingUI() {
+        textMode.classList.add("hidden");
+        recMode.classList.remove("hidden");
+        recMode.classList.remove("recording-paused");
+        seconds = 0;
+        timerEl.textContent = "0:00";
+        isPaused = false;
+        startTimer();
+      }
+      function backToTextUI() {
+        stopTimer();
+        seconds = 0;
+        timerEl.textContent = "0:00";
+        recMode.classList.add("hidden");
+        textMode.classList.remove("hidden");
+        recMode.classList.remove("recording-paused");
+      }
+      function startTimer() {
+        if (timer) return;
+        timer = setInterval(() => {
+          seconds++;
+          timerEl.textContent = `${Math.floor(seconds / 60)}:${fmt2(seconds % 60)}`;
+        }, 1000);
+      }
+      function stopTimer() {
+        clearInterval(timer);
+        timer = null;
+      }
+
+      async function startRecording() {
+        showRecordingUI();
+        chunks = [];
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+          const mime = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
+            ? "audio/webm;codecs=opus"
+            : MediaRecorder.isTypeSupported("audio/mp4")
+              ? "audio/mp4"
+              : "";
+          mediaRecorder = new MediaRecorder(
+            stream,
+            mime ? { mimeType: mime } : undefined
+          );
+          mediaRecorder.ondataavailable = (e) => e.data && chunks.push(e.data);
+          mediaRecorder.start();
+        } catch (err) {
+          console.warn("Mic blocked/unavailable → chạy UI-only.", err);
+          mediaRecorder = null;
+        }
+      }
+
+      function pauseResume() {
+        isPaused = !isPaused;
+        recMode.classList.toggle("recording-paused", isPaused);
+        if (isPaused) stopTimer();
+        else startTimer();
+        if (!mediaRecorder) return;
+        try {
+          if (isPaused && mediaRecorder.state === "recording")
+            mediaRecorder.pause();
+          else if (!isPaused && mediaRecorder.state === "paused")
+            mediaRecorder.resume();
+        } catch {}
+      }
+
+      function stopTracks() {
+        try {
+          mediaRecorder?.stream?.getTracks()?.forEach((t) => t.stop());
+        } catch {}
+      }
+
+      function discard() {
+        try {
+          if (mediaRecorder && mediaRecorder.state !== "inactive")
+            mediaRecorder.stop();
+        } catch {}
+        stopTracks();
+        mediaRecorder = null;
+        chunks = [];
+        backToTextUI();
+      }
+
+      function stopAndSend() {
+        if (recMode.classList.contains("hidden")) {
+          return;
+        }
+
+        if (mediaRecorder) {
+          mediaRecorder.onstop = () => {
+            const type = mediaRecorder.mimeType || "audio/webm";
+            const blob = new Blob(chunks, { type });
+
+            try {
+              const url = URL.createObjectURL(blob);
+              const wrap = document.createElement("div");
+            } catch {}
+          };
+          try {
+            mediaRecorder.stop();
+          } catch {}
+          stopTracks();
+        }
+        backToTextUI();
+      }
+
+      micBtn?.addEventListener("click", startRecording);
+      pauseBtn?.addEventListener("click", pauseResume);
+      binBtn?.addEventListener("click", discard);
+      sendBtn?.addEventListener("click", stopAndSend);
+    </script>
+  </body>
+</html>
