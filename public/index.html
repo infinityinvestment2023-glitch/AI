@@ -134,7 +134,10 @@
           const res = await fetch("/api/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt: message })
+            body: JSON.stringify({
+  prompt: message,
+  systemPrompt: "You are Coach Joel AI, a leadership coach who gives concise motivational answers."
+})
           });
           const data = await res.json();
           addMessage(data.text || "Error: No response", false);
@@ -186,4 +189,5 @@
     </script>
   </body>
 </html>
+
 
